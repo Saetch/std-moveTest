@@ -3,7 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <vector>
-#define AMOUNT 1500000
+#define AMOUNT 1000000
 
 
 template <typename T>
@@ -32,7 +32,7 @@ int main()
         for (int i = 0; i < AMOUNT; i++) {
             a = "";
             b = "";
-            for (int c = 0; c < 15; c++) {
+            for (int c = 0; c < 30; c++) {
                 * cp = rand() % 65 + 65;
                 a.append(cp,1);
                 * cp = rand() % 65 + 65;
