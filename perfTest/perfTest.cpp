@@ -38,8 +38,6 @@ int main()
                 * cp = rand() % 65 + 65;
                 b.append(cp,1);
             }
-            a = rand() % 1500;
-            b = rand() % 1500;
 
             vec.push_back(a);
             vec.push_back(b);
