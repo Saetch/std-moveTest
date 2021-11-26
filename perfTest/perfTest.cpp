@@ -53,7 +53,7 @@ int main()
 
         auto endMs = (std::chrono::time_point_cast<std::chrono::milliseconds>)(std::chrono::steady_clock::now());
 
-        printf_s("time for regular copy : %d ms\n", endMs - nowMs);
+        printf_s("time for regular swap : %d ms\n", endMs - nowMs);
         }
         {
             auto nowMs = (std::chrono::time_point_cast<std::chrono::milliseconds>)(std::chrono::steady_clock::now());
@@ -63,7 +63,7 @@ int main()
 
             auto endMs = (std::chrono::time_point_cast<std::chrono::milliseconds>)(std::chrono::steady_clock::now());
 
-            printf_s("time for move copy : %d ms\n", endMs - nowMs);
+            printf_s("time for move swap : %d ms\n", endMs - nowMs);
 
         }
 
