@@ -4,7 +4,7 @@
 #include <chrono>
 #include <vector>
 #define AMOUNT 10000000
-#define TYPE 1
+#define TYPE 2
 
 class Iffer {
 public:
@@ -14,11 +14,18 @@ public:
     void call(int &val);
 };
 
+
 class Switcher{
 public:
     void(*func)(Switcher* sw, int &val);
 
 
+};
+
+class MyNumber {
+public:
+    int nmbr;
+    MyNumber(int i) : nmbr(i) {};
 };
 
 template <typename T>
@@ -150,7 +157,57 @@ void testPerfIfElseFnctPointer() {
     }
 }
 
+void testForEachValRef() {
+    using std::vector;
 
+    vector<MyNumber*> list;
+    srand(time(NULL));
+    int timeRef = 0;
+    int timeVal = 0;
+    constexpr int tries = 1000;
+    for (int i = 0; i < AMOUNT; i++) {
+        list.push_back(new MyNumber(rand() % std::max( i,1)));
+    }
+    for (int i = 0; i < tries; i++) {
+{
+
+        auto nowMs = (std::chrono::time_point_cast<std::chrono::milliseconds>)(std::chrono::steady_clock::now());
+
+        for (MyNumber* o : list) {
+            if (o->nmbr == 10) {
+                //printf("Found!\n");
+            }
+
+        }
+
+        auto endMs = (std::chrono::time_point_cast<std::chrono::milliseconds>)(std::chrono::steady_clock::now());
+
+        printf_s("time for call by value : %d ms\n", endMs - nowMs);
+        timeVal += (endMs - nowMs).count();
+    }
+    {
+
+        auto nowMs = (std::chrono::time_point_cast<std::chrono::milliseconds>)(std::chrono::steady_clock::now());
+
+        for (MyNumber* &o : list) {
+            if (o->nmbr == 10) {
+                //printf("Found!\n");
+            }
+
+        }
+
+        auto endMs = (std::chrono::time_point_cast<std::chrono::milliseconds>)(std::chrono::steady_clock::now());
+
+        printf_s("time for call by reference : %d ms\n", endMs - nowMs);
+        timeRef += (endMs - nowMs).count();
+
+    }
+    }
+
+    std::cout << "Avg time for val: " << (float)timeVal / (float)tries << " ms" << std::endl;
+    std::cout << "Avg time for ref: " << (float)timeRef / (float)tries << " ms" << std::endl;
+    
+}
 
 int main()
 {
@@ -161,6 +218,9 @@ int main()
         break;
     case 1:
         testPerfIfElseFnctPointer();
+        break;
+    case 2:
+        testForEachValRef();
         break;
     default:
         break;
